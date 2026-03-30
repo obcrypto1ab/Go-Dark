@@ -2,993 +2,416 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoDark Video AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-base: #000000;
-            --bg-panel: #121214;
-            --bg-input: #18181b;
-            --accent-primary: #8b5cf6;
-            --accent-secondary: #d946ef;
-            --accent-glow: rgba(139, 92, 246, 0.4);
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --text-main: #ffffff;
-            --text-muted: #a1a1aa;
-            --danger: #ef4444;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --radius-md: 12px;
-            --radius-lg: 20px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --bg-base: #0a0a0c;
+            --bg-surface: #141418;
+            --accent: #5e6ad2;
+            --accent-hover: #737fe6;
+            --text-primary: #ffffff;
+            --text-secondary: #8f8f9d;
+            --border: #23232c;
+            --error: #e04a4a;
         }
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
             background-color: var(--bg-base);
-            color: var(--text-main);
-            overflow-x: hidden;
-            line-height: 1.5;
-        }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-base); }
-        ::-webkit-scrollbar-thumb { background: var(--bg-input); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--bg-panel); }
-
-        .glass {
-            background: rgba(18, 18, 20, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border-glass);
-        }
-        .gradient-text {
-            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .hidden { display: none !important; }
-        .flex { display: flex; }
-        .items-center { align-items: center; }
-        .justify-between { justify-content: space-between; }
-        .justify-center { justify-content: center; }
-        .flex-col { flex-direction: column; }
-        .text-center { text-align: center; }
-
-        button {
-            cursor: pointer;
-            border: none;
-            outline: none;
-            background: none;
-            color: var(--text-main);
-            font-weight: 600;
-            transition: var(--transition);
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            padding: 14px 24px;
-            border-radius: var(--radius-md);
-            box-shadow: 0 4px 20px var(--accent-glow);
-            width: 100%;
-            font-size: 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-primary:hover {
-            box-shadow: 0 6px 25px rgba(217, 70, 239, 0.5);
-            transform: translateY(-2px);
-        }
-        .btn-primary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        .btn-secondary {
-            background: var(--bg-input);
-            border: 1px solid var(--border-glass);
-            padding: 14px 24px;
-            border-radius: var(--radius-md);
-            width: 100%;
-            font-size: 1rem;
-        }
-        .btn-secondary:hover {
-            background: var(--bg-panel);
-            border-color: rgba(255,255,255,0.2);
-        }
-        .btn-danger {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            padding: 10px 16px;
-            border-radius: var(--radius-md);
-        }
-        .btn-danger:hover { background: rgba(239, 68, 68, 0.2); }
-
-        input, textarea, select {
-            width: 100%;
-            background: var(--bg-input);
-            border: 1px solid var(--border-glass);
-            color: var(--text-main);
-            padding: 14px;
-            border-radius: var(--radius-md);
-            font-size: 1rem;
-            transition: var(--transition);
-            outline: none;
-        }
-        input:focus, textarea:focus, select:focus {
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 2px var(--accent-glow);
-        }
-        textarea { resize: vertical; min-height: 120px; }
-        label { display: block; margin-bottom: 8px; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
-        .input-group { margin-bottom: 20px; }
-
-        #splash-screen {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-base);
-            z-index: 10000;
+            color: var(--text-primary);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            animation: fadeOut 1s ease 4s forwards;
-        }
-        .splash-logo {
-            font-size: 3rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            animation: scaleIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: scale(0.9);
-        }
-        .splash-subtitle {
-            margin-top: 10px;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            animation: slideUpFade 1s ease 0.5s forwards;
-            opacity: 0;
+            padding: 2rem 1rem;
         }
 
         header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 16px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-glass);
-        }
-        .menu-btn, .profile-btn {
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-size: 1.5rem;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: var(--transition);
-        }
-        .menu-btn:hover, .profile-btn:hover { background: var(--bg-input); }
-        .header-title { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.5px; }
-        .avatar-img {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--accent-primary);
+            text-align: center;
+            margin-bottom: 3rem;
         }
 
-        #drawer-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
-            z-index: 900;
-            opacity: 0;
-            pointer-events: none;
-            transition: var(--transition);
+        header h1 {
+            font-size: 2.5rem;
+            letter-spacing: -0.05em;
+            background: linear-gradient(90deg, #fff, #8f8f9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        #drawer-overlay.active { opacity: 1; pointer-events: auto; }
-        #sidebar {
-            position: fixed;
-            top: 0;
-            left: -300px;
-            width: 280px;
-            height: 100vh;
-            background: var(--bg-panel);
-            border-right: 1px solid var(--border-glass);
-            z-index: 901;
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            padding: 24px 0;
+
+        header p {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
         }
-        #sidebar.active { left: 0; }
-        .sidebar-header { padding: 0 24px 24px; border-bottom: 1px solid var(--border-glass); margin-bottom: 16px; }
-        .sidebar-user { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
-        .sidebar-nav { flex: 1; overflow-y: auto; }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            padding: 16px 24px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            gap: 12px;
-            cursor: pointer;
-        }
-        .nav-item:hover, .nav-item.active {
-            color: var(--text-main);
-            background: rgba(255,255,255,0.03);
-            border-left: 3px solid var(--accent-primary);
-        }
-        .sidebar-footer { padding: 24px; border-top: 1px solid var(--border-glass); font-size: 0.85rem; color: var(--text-muted); }
-        .ext-links { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
-        .ext-links a { color: var(--accent-primary); text-decoration: none; font-weight: 600; }
 
         main {
-            padding: 24px;
-            max-width: 800px;
-            margin: 0 auto;
-            min-height: calc(100vh - 70px);
-            position: relative;
+            width: 100%;
+            max-width: 600px;
+            background: var(--bg-surface);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
-        .view { display: none; animation: fadeIn 0.4s ease; }
-        .view.active { display: block; }
-        .view-title { font-size: 1.75rem; font-weight: 700; margin-bottom: 24px; }
 
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .project-card {
-            background: var(--bg-panel);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            transition: var(--transition);
+        .input-group {
             display: flex;
             flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
-        .project-card:hover { transform: translateY(-4px); border-color: var(--accent-glow); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .project-thumb { height: 160px; background: var(--bg-input); position: relative; display: flex; align-items: center; justify-content: center; }
-        .project-thumb video { width: 100%; height: 100%; object-fit: cover; }
-        .play-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: var(--transition);
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            resize: none;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        button.primary-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .project-card:hover .play-overlay { opacity: 1; }
-        .play-icon { width: 48px; height: 48px; background: var(--accent-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px var(--accent-glow); }
-        .play-icon svg { width: 24px; height: 24px; fill: white; margin-left: 4px; }
-        .project-info { padding: 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .project-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .project-meta { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; }
-        .project-actions { display: flex; justify-content: space-between; align-items: center; }
-        .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); background: var(--bg-panel); border-radius: var(--radius-lg); border: 1px dashed var(--border-glass); grid-column: 1 / -1; }
 
-        .create-panel { padding: 24px; border-radius: var(--radius-lg); }
-        .controls-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-        @media (max-width: 600px) { .controls-grid { grid-template-columns: 1fr; } }
+        button.primary-btn:hover:not(:disabled) {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
 
-        .loading-container { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; }
-        .spinner { width: 80px; height: 80px; border: 4px solid var(--bg-input); border-top: 4px solid var(--accent-primary); border-right: 4px solid var(--accent-secondary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 30px; }
-        .loading-text { font-size: 1.25rem; font-weight: 600; margin-bottom: 10px; }
-        .loading-subtext { color: var(--text-muted); font-size: 0.95rem; max-width: 400px; }
-        .progress-bar-container { width: 100%; max-width: 400px; height: 6px; background: var(--bg-input); border-radius: 3px; margin-top: 30px; overflow: hidden; }
-        .progress-bar { height: 100%; background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary)); width: 0%; transition: width 0.5s ease; }
+        button.primary-btn:disabled {
+            background: var(--border);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+        }
 
-        .preview-wrapper { background: var(--bg-panel); border-radius: var(--radius-lg); padding: 20px; border: 1px solid var(--border-glass); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        .video-container { position: relative; width: 100%; background: #000; border-radius: var(--radius-md); overflow: hidden; aspect-ratio: 16 / 9; margin-bottom: 24px; }
-        .video-container video { width: 100%; height: 100%; outline: none; }
-        .watermark { position: absolute; bottom: 16px; right: 16px; color: rgba(255, 255, 255, 0.6); font-size: 1.2rem; font-weight: 800; letter-spacing: 1px; pointer-events: none; text-shadow: 0 2px 4px rgba(0,0,0,0.8); z-index: 10; }
-        .preview-actions { display: flex; gap: 16px; }
-        @media (max-width: 600px) { .preview-actions { flex-direction: column; } }
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            display: none;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+        }
 
-        .fab { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px var(--accent-glow); cursor: pointer; z-index: 90; transition: var(--transition); }
-        .fab:hover { transform: scale(1.05) rotate(90deg); }
-        .fab svg { width: 24px; height: 24px; fill: currentColor; }
+        .video-wrapper.active {
+            display: block;
+        }
 
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 20px; }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content { background: var(--bg-panel); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); width: 100%; max-width: 450px; padding: 30px; transform: scale(0.95) translateY(10px); transition: var(--transition); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
-        .modal-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-        .modal-title { font-size: 1.25rem; font-weight: 700; }
-        .modal-body { color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; font-size: 0.95rem; }
-        .modal-footer { display: flex; justify-content: flex-end; gap: 12px; }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-        .icon { width: 24px; height: 24px; fill: currentColor; }
-        .icon-sm { width: 18px; height: 18px; fill: currentColor; }
+        /* NOTE: Baking the "GoDark" watermark directly into the exported MP4 file
+          requires server-side FFmpeg or a heavy WASM port (@ffmpeg/ffmpeg) which 
+          drastically reduces frontend performance. Per requirements, keeping this 
+          as a secure, lightweight preview overlay. 
+        */
+        .watermark {
+            position: absolute;
+            bottom: 12px;
+            right: 16px;
+            font-weight: 800;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.9);
+            pointer-events: none;
+            letter-spacing: 0.05em;
+        }
 
-        .content-box { background: var(--bg-panel); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-glass); margin-bottom: 20px; }
-        .content-box h3 { margin-bottom: 12px; color: var(--text-main); }
-        .content-box p { color: var(--text-muted); margin-bottom: 16px; }
-        .content-box ul { list-style: none; color: var(--text-muted); margin-bottom: 16px; }
-        .content-box li { margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .content-box li::before { content: '•'; color: var(--accent-primary); font-weight: bold; }
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            display: none;
+        }
 
-        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes scaleIn { to { opacity: 1; transform: scale(1); } }
-        @keyframes slideUpFade { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(20px); } }
+        .actions.active {
+            display: flex;
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .secondary-btn:hover {
+            background: var(--border);
+        }
+
+        /* Loading State */
+        .loading-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 10;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
         @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Custom Modal */
+        .modal-backdrop {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.2s;
+            z-index: 100;
+        }
+
+        .modal-backdrop.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal {
+            background: var(--bg-surface);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            transform: translateY(20px);
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-backdrop.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-title { margin-bottom: 1rem; color: var(--error); font-weight: 600; }
+        .modal-message { color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.95rem; line-height: 1.5; }
+        .modal-close {
+            background: var(--border);
+            color: var(--text-primary);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .modal-close:hover { background: #2f2f3b; }
     </style>
 </head>
 <body>
 
-    <div id="splash-screen">
-        <div class="splash-logo gradient-text">GoDark Video AI</div>
-        <div class="splash-subtitle">Built by Insider</div>
-    </div>
-
-    <header class="glass">
-        <button class="menu-btn" onclick="app.toggleDrawer()">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-        </button>
-        <div class="header-title gradient-text">GoDark Video AI</div>
-        <button class="profile-btn" onclick="app.openProfileModal()">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>" alt="Profile" class="avatar-img" id="header-avatar">
-        </button>
+    <header>
+        <h1>GoDark Video</h1>
+        <p>Cinematic AI Generation</p>
     </header>
 
-    <div id="drawer-overlay" onclick="app.toggleDrawer()"></div>
-    <aside id="sidebar">
-        <div class="sidebar-header">
-            <div class="header-title gradient-text">GoDark Video AI</div>
-            <div class="sidebar-user">
-                <img src="" alt="User" class="avatar-img" id="sidebar-avatar" style="display:none;">
-                <div style="display:flex; flex-direction:column;">
-                    <span id="sidebar-username" style="font-weight:600; font-size:0.95rem;">Guest User</span>
-                    <span style="font-size:0.75rem; color:var(--text-muted);">Creator</span>
-                </div>
-            </div>
-        </div>
-        <nav class="sidebar-nav">
-            <a class="nav-item active" data-target="view-projects" onclick="app.navigate('view-projects')">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-                Your Projects
-            </a>
-            <a class="nav-item" data-target="view-create" onclick="app.navigate('view-create')">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                Create Video
-            </a>
-            <a class="nav-item" data-target="view-help" onclick="app.navigate('view-help')">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
-                Help Center
-            </a>
-            <a class="nav-item" data-target="view-about" onclick="app.navigate('view-about')">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                About GoDark
-            </a>
-        </nav>
-        <div class="sidebar-footer">
-            <div>Developer: Insider</div>
-            <div class="ext-links">
-                <a href="https://x.com/ai_elon_musk_" target="_blank">𝕏 My Profile</a>
-                <a href="https://x.com/GoDark" target="_blank">𝕏 GoDark Official</a>
-            </div>
-        </div>
-    </aside>
-
     <main>
-        <section id="view-projects" class="view active">
-            <div class="flex justify-between items-center" style="margin-bottom: 24px;">
-                <h1 class="view-title" style="margin:0;">Your Projects</h1>
-                <button class="btn-primary" style="width:auto; padding: 10px 16px; font-size:0.9rem;" onclick="app.navigate('view-create')">+ New</button>
-            </div>
-            <div class="projects-grid" id="projects-container"></div>
-        </section>
+        <div class="input-group">
+            <textarea id="promptInput" placeholder="Describe your scene in detail..."></textarea>
+            <button id="generateBtn" class="primary-btn">Generate Scene</button>
+        </div>
 
-        <section id="view-create" class="view">
-            <h1 class="view-title">Create Cinematic Video</h1>
-            <div class="glass create-panel">
-                <div class="input-group">
-                    <label for="prompt-title">Project Title (Optional)</label>
-                    <input type="text" id="prompt-title" placeholder="e.g. Cyberpunk City Flythrough" autocomplete="off">
-                </div>
-                
-                <div class="input-group">
-                    <label for="prompt-text">Narrative Script / Video Prompt</label>
-                    <textarea id="prompt-text" placeholder="Describe the scene in detail. E.g., A futuristic neon city in the rain, flying cars zooming past skyscrapers, cinematic lighting, highly detailed..." required></textarea>
-                </div>
-
-                <div class="controls-grid">
-                    <div class="input-group">
-                        <label for="prompt-style">Visual Style</label>
-                        <select id="prompt-style">
-                            <option value="Cinematic">Cinematic</option>
-                            <option value="Dark Futuristic" selected>Dark Futuristic</option>
-                            <option value="Sci-Fi">Sci-Fi</option>
-                            <option value="Realistic">Realistic</option>
-                            <option value="Anime">Anime</option>
-                            <option value="Minimal">Minimal</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="prompt-duration">Duration</label>
-                        <select id="prompt-duration">
-                            <option value="8">8 Seconds (Default)</option>
-                            <option value="10">10 Seconds</option>
-                            <option value="12">12 Seconds</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="prompt-ratio">Aspect Ratio</label>
-                        <select id="prompt-ratio">
-                            <option value="16:9">16:9 Landscape</option>
-                            <option value="9:16">9:16 Portrait</option>
-                            <option value="1:1">1:1 Square</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button id="btn-generate" class="btn-primary" style="margin-top: 10px;" onclick="app.startGeneration()">
-                    <div class="flex items-center justify-center gap-2">
-                        <svg class="icon-sm" viewBox="0 0 24 24"><path d="M21 3H3c-1.11 0-2 .89-2 2v12c0 1.1.89 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 14H3V5h18v12zm-5-6l-7 4V7z"/></svg>
-                        <span>Generate Video</span>
-                    </div>
-                </button>
-            </div>
-        </section>
-
-        <section id="view-loading" class="view">
-            <div class="loading-container glass" style="border-radius: var(--radius-lg);">
+        <div id="videoWrapper" class="video-wrapper">
+            <video id="resultVideo" autoplay loop muted playsinline></video>
+            <div class="watermark">GoDark</div>
+            
+            <div id="loadingOverlay" class="loading-overlay">
                 <div class="spinner"></div>
-                <div class="loading-text gradient-text" id="loading-status">Initializing Backend...</div>
-                <div class="loading-subtext" id="loading-subtext">Securely routing your prompt to the serverless synthesis engine.</div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" id="loading-progress"></div>
-                </div>
-                <button class="btn-danger" style="margin-top: 40px; width:auto;" onclick="app.cancelGeneration()">Cancel Request</button>
+                <p>Synthesizing pixels...</p>
             </div>
-        </section>
+        </div>
 
-        <section id="view-preview" class="view">
-            <h1 class="view-title" id="preview-title">Generated Video</h1>
-            <div class="preview-wrapper">
-                <div class="video-container">
-                    <video id="preview-video" controls autoplay loop playsinline></video>
-                    <div class="watermark">GoDark</div>
-                </div>
-                
-                <div class="preview-actions">
-                    <button class="btn-primary" onclick="app.exportVideo()">
-                        <div class="flex items-center justify-center" style="gap:8px;">
-                            <svg class="icon-sm" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                            Export MP4
-                        </div>
-                    </button>
-                    <button class="btn-secondary" onclick="app.navigate('view-create')">Create New</button>
-                    <button class="btn-secondary" style="width: auto; padding: 14px;" onclick="app.navigate('view-projects')">
-                        <svg class="icon-sm" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <section id="view-help" class="view">
-            <h1 class="view-title">Help Center</h1>
-            <div class="content-box">
-                <h3>Getting Started</h3>
-                <p>GoDark Video AI transforms your text prompts into highly detailed, cinematic videos using the state-of-the-art cerspense/zeroscope_v2_576w model.</p>
-                <ul>
-                    <li>Navigate to <b>Create Video</b> to start.</li>
-                    <li>Write a detailed, descriptive narrative prompt.</li>
-                    <li>Select your preferred visual style, duration, and aspect ratio.</li>
-                    <li>Click Generate and wait for the secure serverless backend to synthesize your video.</li>
-                </ul>
-            </div>
-            <div class="content-box">
-                <h3>Data Storage</h3>
-                <p>All videos are saved locally on your device using IndexedDB. Export your favorites to keep them permanently!</p>
-            </div>
-        </section>
-
-        <section id="view-about" class="view">
-            <h1 class="view-title">About GoDark</h1>
-            <div class="content-box" style="text-align: center; padding: 40px 20px;">
-                <div class="gradient-text" style="font-size: 2.5rem; font-weight: 800; margin-bottom: 10px;">GoDark Video AI</div>
-                <p style="font-size: 1.1rem; color: var(--text-main);">Premium Text-to-Video Synthesis</p>
-                <div style="margin: 30px 0; border-top: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass); padding: 20px 0;">
-                    <p>Powered by <b>Serverless Hugging Face Inference</b></p>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Model: cerspense/zeroscope_v2_576w</p>
-                </div>
-                <p style="margin-bottom: 5px;">Designed & Developed by <b style="color:var(--accent-primary);">Insider</b></p>
-                
-                <div style="display:flex; justify-content:center; gap:20px; margin-top:24px;">
-                    <a href="https://x.com/ai_elon_musk_" target="_blank" class="btn-secondary" style="width:auto; text-decoration:none;">My 𝕏</a>
-                    <a href="https://x.com/GoDark" target="_blank" class="btn-secondary" style="width:auto; text-decoration:none;">GoDark 𝕏</a>
-                </div>
-            </div>
-        </section>
-
+        <div id="actionRow" class="actions">
+            <button id="downloadBtn" class="secondary-btn">Download Original File</button>
+        </div>
     </main>
 
-    <div class="fab" onclick="app.navigate('view-create')" title="Create Video">
-        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-    </div>
-
-    <div id="custom-modal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div id="modal-icon"></div>
-                <h3 class="modal-title" id="modal-title">Title</h3>
-            </div>
-            <div class="modal-body" id="modal-body">Message goes here.</div>
-            <div class="modal-footer" id="modal-footer"></div>
-        </div>
-    </div>
-
-    <div id="profile-modal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Profile Settings</h3>
-            </div>
-            <div class="modal-body">
-                <div class="input-group" style="text-align:center;">
-                    <label>Profile Avatar</label>
-                    <div style="position:relative; width:80px; height:80px; margin:0 auto 10px;">
-                        <img src="" id="profile-preview-img" class="avatar-img" style="width:100%; height:100%; display:none;">
-                        <div id="profile-placeholder" style="width:100%; height:100%; background:var(--bg-input); border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px dashed var(--border-glass);">
-                            <svg class="icon" viewBox="0 0 24 24" style="fill:var(--text-muted);"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                        </div>
-                    </div>
-                    <input type="file" id="profile-upload" accept="image/*" style="font-size:0.8rem; padding:8px;">
-                </div>
-                <div class="input-group">
-                    <label>Display Name</label>
-                    <input type="text" id="profile-name" placeholder="Enter your name">
-                </div>
-                <div style="text-align:center; padding-top: 10px;">
-                    <small style="color:var(--success); font-weight:bold;">API Access is securely handled by our serverless backend.</small>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" style="width:auto;" onclick="app.closeProfileModal()">Cancel</button>
-                <button class="btn-primary" style="width:auto;" onclick="app.saveProfile()">Save Settings</button>
-            </div>
+    <div id="errorModal" class="modal-backdrop">
+        <div class="modal">
+            <h3 class="modal-title">Generation Error</h3>
+            <p id="errorMsg" class="modal-message">An unknown error occurred.</p>
+            <button class="modal-close" onclick="closeModal()">Dismiss</button>
         </div>
     </div>
 
     <script>
-        const $ = (id) => document.getElementById(id);
-        const $$ = (sel) => document.querySelectorAll(sel);
+        // --- 1. Database Initialization (IndexedDB) ---
+        const DB_NAME = 'GoDarkDB';
+        const STORE_NAME = 'video_history';
+        let db;
 
-        const CONFIG = {
-            API_URL: '/api/generate-video',
-            DB_NAME: 'GoDarkVideoDB',
-            DB_VERSION: 1
-        };
-
-        const state = {
-            db: null,
-            currentView: 'view-projects',
-            abortController: null,
-            loadingInterval: null,
-            profile: {
-                name: localStorage.getItem('godark_name') || '',
-                avatar: localStorage.getItem('godark_avatar') || ''
-            },
-            currentPreviewBlobUrl: null
-        };
-
-        const ui = {
-            icons: {
-                error: `<svg style="fill:var(--danger);width:28px;height:28px" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>`,
-                success: `<svg style="fill:var(--success);width:28px;height:28px" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>`,
-                warning: `<svg style="fill:var(--warning);width:28px;height:28px" viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>`,
-                info: `<svg style="fill:var(--accent-primary);width:28px;height:28px" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>`
+        const request = indexedDB.open(DB_NAME, 1);
+        request.onupgradeneeded = (e) => {
+            const tempDb = e.target.result;
+            if (!tempDb.objectStoreNames.contains(STORE_NAME)) {
+                tempDb.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
             }
         };
+        request.onsuccess = (e) => { db = e.target.result; };
+        request.onerror = (e) => { console.error('IndexedDB Error:', e); };
 
-        const app = {
-            init() {
-                this.initDB();
-                this.updateProfileUI();
-                
-                $$('.nav-item').forEach(el => {
-                    el.addEventListener('click', (e) => {
-                        $$('.nav-item').forEach(nav => nav.classList.remove('active'));
-                        e.currentTarget.classList.add('active');
-                        this.closeDrawer();
-                    });
-                });
+        function saveToHistory(prompt, base64Data) {
+            if (!db) return;
+            const tx = db.transaction(STORE_NAME, 'readwrite');
+            const store = tx.objectStore(STORE_NAME);
+            store.add({ prompt, base64Data, timestamp: Date.now() });
+        }
 
-                $('profile-upload').addEventListener('change', (e) => {
-                    const file = e.target.files[0];
-                    if(!file) return;
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                        $('profile-preview-img').src = event.target.result;
-                        $('profile-preview-img').style.display = 'block';
-                        $('profile-placeholder').style.display = 'none';
-                    };
-                    reader.readAsDataURL(file);
-                });
-            },
+        // --- 2. UI Elements ---
+        const promptInput = document.getElementById('promptInput');
+        const generateBtn = document.getElementById('generateBtn');
+        const videoWrapper = document.getElementById('videoWrapper');
+        const resultVideo = document.getElementById('resultVideo');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const actionRow = document.getElementById('actionRow');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const errorModal = document.getElementById('errorModal');
+        const errorMsg = document.getElementById('errorMsg');
 
-            navigate(viewId) {
-                $$('.view').forEach(v => v.classList.remove('active'));
-                $(viewId).classList.add('active');
-                state.currentView = viewId;
-                window.scrollTo({top:0, behavior:'smooth'});
-                if(viewId === 'view-projects') this.renderProjects();
-            },
+        let currentBase64Video = null;
 
-            toggleDrawer() {
-                $('sidebar').classList.toggle('active');
-                $('drawer-overlay').classList.toggle('active');
-            },
-            closeDrawer() {
-                $('sidebar').classList.remove('active');
-                $('drawer-overlay').classList.remove('active');
-            },
+        // --- 3. Error Handling Modals ---
+        function showError(message) {
+            errorMsg.textContent = message;
+            errorModal.classList.add('active');
+            resetUIState();
+        }
 
-            showModal(type, title, message, config = {}) {
-                $('modal-icon').innerHTML = ui.icons[type] || ui.icons.info;
-                $('modal-title').textContent = title;
-                $('modal-body').innerHTML = message;
-                
-                const footer = $('modal-footer');
-                footer.innerHTML = '';
+        function closeModal() {
+            errorModal.classList.remove('active');
+        }
 
-                if (config.showCancel) {
-                    const cancelBtn = document.createElement('button');
-                    cancelBtn.className = 'btn-secondary';
-                    cancelBtn.style.width = 'auto';
-                    cancelBtn.textContent = config.cancelText || 'Cancel';
-                    cancelBtn.onclick = () => {
-                        this.closeModal();
-                        if(config.onCancel) config.onCancel();
-                    };
-                    footer.appendChild(cancelBtn);
-                }
+        function resetUIState() {
+            generateBtn.disabled = false;
+            generateBtn.textContent = 'Generate Scene';
+            loadingOverlay.classList.remove('active');
+        }
 
-                const confirmBtn = document.createElement('button');
-                confirmBtn.className = type === 'danger' ? 'btn-danger' : 'btn-primary';
-                confirmBtn.style.width = 'auto';
-                if(type === 'danger') confirmBtn.style.padding = '14px 24px';
-                confirmBtn.textContent = config.confirmText || 'OK';
-                confirmBtn.onclick = () => {
-                    this.closeModal();
-                    if(config.onConfirm) config.onConfirm();
-                };
-                footer.appendChild(confirmBtn);
-
-                $('custom-modal').classList.add('active');
-            },
-            closeModal() {
-                $('custom-modal').classList.remove('active');
-            },
-
-            openProfileModal() {
-                $('profile-name').value = state.profile.name;
-                if (state.profile.avatar) {
-                    $('profile-preview-img').src = state.profile.avatar;
-                    $('profile-preview-img').style.display = 'block';
-                    $('profile-placeholder').style.display = 'none';
-                }
-                $('profile-modal').classList.add('active');
-            },
-            closeProfileModal() {
-                $('profile-modal').classList.remove('active');
-            },
-            saveProfile() {
-                const name = $('profile-name').value.trim();
-                let avatar = state.profile.avatar;
-                
-                if($('profile-preview-img').style.display === 'block') {
-                    avatar = $('profile-preview-img').src;
-                }
-
-                localStorage.setItem('godark_name', name);
-                localStorage.setItem('godark_avatar', avatar);
-
-                state.profile = { name, avatar };
-                this.updateProfileUI();
-                this.closeProfileModal();
-                this.showModal('success', 'Profile Saved', 'Your profile settings have been updated.');
-            },
-            updateProfileUI() {
-                if (state.profile.name) {
-                    $('sidebar-username').textContent = state.profile.name;
-                }
-                if (state.profile.avatar) {
-                    $('header-avatar').src = state.profile.avatar;
-                    $('sidebar-avatar').src = state.profile.avatar;
-                    $('sidebar-avatar').style.display = 'block';
-                }
-            },
-
-            initDB() {
-                const request = indexedDB.open(CONFIG.DB_NAME, CONFIG.DB_VERSION);
-                request.onerror = (e) => console.error("Database error: ", e);
-                request.onupgradeneeded = (e) => {
-                    const db = e.target.result;
-                    if (!db.objectStoreNames.contains('videos')) {
-                        db.createObjectStore('videos', { keyPath: 'id', autoIncrement: true });
-                    }
-                };
-                request.onsuccess = (e) => {
-                    state.db = e.target.result;
-                    this.renderProjects();
-                };
-            },
-            async saveProject(blob, metadata) {
-                return new Promise((resolve, reject) => {
-                    if(!state.db) return reject("Database not initialized");
-                    const transaction = state.db.transaction(['videos'], 'readwrite');
-                    const store = transaction.objectStore('videos');
-                    const record = {
-                        blob: blob,
-                        title: metadata.title || 'Untitled Project',
-                        prompt: metadata.prompt,
-                        style: metadata.style,
-                        timestamp: new Date().getTime()
-                    };
-                    const req = store.add(record);
-                    req.onsuccess = (e) => resolve(e.target.result);
-                    req.onerror = () => reject("Failed to save project");
-                });
-            },
-            async getProjects() {
-                return new Promise((resolve, reject) => {
-                    if(!state.db) return resolve([]);
-                    const transaction = state.db.transaction(['videos'], 'readonly');
-                    const store = transaction.objectStore('videos');
-                    const req = store.getAll();
-                    req.onsuccess = () => {
-                        const results = req.result.sort((a,b) => b.timestamp - a.timestamp);
-                        resolve(results);
-                    };
-                    req.onerror = () => reject("Failed to fetch projects");
-                });
-            },
-            async deleteProject(id) {
-                return new Promise((resolve, reject) => {
-                    const transaction = state.db.transaction(['videos'], 'readwrite');
-                    const store = transaction.objectStore('videos');
-                    const req = store.delete(id);
-                    req.onsuccess = () => resolve();
-                    req.onerror = () => reject();
-                });
-            },
-
-            async renderProjects() {
-                const container = $('projects-container');
-                container.innerHTML = '';
-                
-                try {
-                    const projects = await this.getProjects();
-                    
-                    if(projects.length === 0) {
-                        container.innerHTML = `
-                            <div class="empty-state">
-                                <svg class="icon" viewBox="0 0 24 24" style="width:48px;height:48px;fill:var(--text-muted);margin-bottom:16px;"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-                                <h3>No Projects Yet</h3>
-                                <p>Generate your first cinematic video to see it here.</p>
-                                <button class="btn-primary" style="width:auto;margin-top:16px;" onclick="app.navigate('view-create')">Create Video</button>
-                            </div>
-                        `;
-                        return;
-                    }
-
-                    projects.forEach(p => {
-                        const date = new Date(p.timestamp).toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' });
-                        const objUrl = URL.createObjectURL(p.blob);
-                        
-                        const card = document.createElement('div');
-                        card.className = 'project-card';
-                        card.innerHTML = `
-                            <div class="project-thumb">
-                                <video src="${objUrl}#t=0.1" muted playsinline preload="metadata"></video>
-                                <div class="play-overlay" onclick="app.playProject(${p.id})">
-                                    <div class="play-icon">
-                                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-info">
-                                <div>
-                                    <div class="project-title">${p.title}</div>
-                                    <div class="project-meta">${date} • ${p.style}</div>
-                                </div>
-                                <div class="project-actions">
-                                    <button class="btn-secondary" style="padding:6px 12px; font-size:0.8rem; width:auto;" onclick="app.playProject(${p.id})">View</button>
-                                    <button class="btn-danger" style="padding:6px; background:transparent; border:none;" onclick="app.confirmDelete(${p.id})">
-                                        <svg class="icon-sm" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                                    </button>
-                                </div>
-                            </div>
-                        `;
-                        container.appendChild(card);
-                    });
-                } catch(err) {
-                    console.error(err);
-                    this.showModal('error', 'Database Error', 'Could not load projects from local storage.');
-                }
-            },
-
-            confirmDelete(id) {
-                this.showModal('warning', 'Delete Video?', 'Are you sure you want to delete this project? This action cannot be undone.', {
-                    showCancel: true,
-                    confirmText: 'Delete',
-                    onConfirm: async () => {
-                        try {
-                            await this.deleteProject(id);
-                            this.renderProjects();
-                        } catch(e) {
-                            this.showModal('error', 'Error', 'Failed to delete project.');
-                        }
-                    }
-                });
-            },
-
-            async playProject(id) {
-                try {
-                    const projects = await this.getProjects();
-                    const project = projects.find(p => p.id === id);
-                    if(!project) throw new Error("Project not found");
-
-                    this.setupPreview(project.blob, project.title);
-                } catch (e) {
-                    this.showModal('error', 'Playback Error', 'Could not load the requested video.');
-                }
-            },
-
-            buildPrompt(base, style, duration, ratio) {
-                const styleMap = {
-                    'Cinematic': 'cinematic lighting, epic composition, 8k resolution, highly detailed, blockbuster movie style, sharp focus',
-                    'Dark Futuristic': 'dark atmosphere, cyberpunk, neon glowing lights, futuristic, grim dark, high contrast, moody',
-                    'Sci-Fi': 'science fiction, space opera, futuristic technology, sleek design, ethereal lighting',
-                    'Realistic': 'photorealistic, true to life, documentary style, natural lighting, ultra-detailed',
-                    'Anime': 'masterpiece anime style, studio ghibli, makoto shinkai, vibrant colors, 2d animation feel',
-                    'Minimal': 'minimalist, clean lines, simple background, stark contrast, elegant'
-                };
-                const enhancement = styleMap[style] || '';
-                return `${base}, ${enhancement}, highly detailed, masterpiece`;
-            },
-
-            async startGeneration() {
-                const promptInput = $('prompt-text').value.trim();
-                if (!promptInput) {
-                    this.showModal('error', 'Missing Prompt', 'Please describe the scene you want to generate.');
-                    return;
-                }
-
-                const title = $('prompt-title').value.trim();
-                const style = $('prompt-style').value;
-                const duration = $('prompt-duration').value;
-                const ratio = $('prompt-ratio').value;
-                const finalPrompt = this.buildPrompt(promptInput, style, duration, ratio);
-
-                this.navigate('view-loading');
-                const progressEl = $('loading-progress');
-                const statusEl = $('loading-status');
-                
-                progressEl.style.width = '10%';
-                let progCounter = 10;
-                
-                const statuses = [
-                    "Connecting to Serverless Backend...",
-                    "Proxying request to Hugging Face...",
-                    "Synthesizing visual frames...",
-                    "Applying cinematic style...",
-                    "Rendering neural video sequence...",
-                    "Streaming MP4 blob..."
-                ];
-                let statusIdx = 0;
-                
-                state.loadingInterval = setInterval(() => {
-                    if (progCounter < 90) progCounter += Math.random() * 5;
-                    progressEl.style.width = `${progCounter}%`;
-                    
-                    if(Math.random() > 0.6 && statusIdx < statuses.length - 1) {
-                        statusIdx++;
-                        statusEl.textContent = statuses[statusIdx];
-                    }
-                }, 1500);
-
-                state.abortController = new AbortController();
-
-                try {
-                    // Call the Vercel API Route instead of Hugging Face directly
-                    const response = await fetch(CONFIG.API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ inputs: finalPrompt }),
-                        signal: state.abortController.signal
-                    });
-
-                    clearInterval(state.loadingInterval);
-                    progressEl.style.width = '100%';
-
-                    if (!response.ok) {
-                        // The backend returns a structured JSON error
-                        const errJson = await response.json().catch(() => ({}));
-                        throw new Error(errJson.error || `HTTP Error ${response.status}`);
-                    }
-
-                    const blob = await response.blob();
-                    if(!blob.type.includes('video')) {
-                        throw new Error(`Invalid response format from API. Expected video, got: ${blob.type}`);
-                    }
-
-                    statusEl.textContent = "Saving locally...";
-                    await this.saveProject(blob, { title: title || promptInput.substring(0, 30)+'...', prompt: promptInput, style });
-                    
-                    this.setupPreview(blob, title || 'Generated Video');
-
-                } catch (err) {
-                    clearInterval(state.loadingInterval);
-                    if (err.name === 'AbortError') {
-                        this.showModal('info', 'Cancelled', 'Video generation was cancelled.');
-                        this.navigate('view-create');
-                    } else {
-                        console.error("Frontend Generation Error:", err);
-                        this.showModal('error', 'Generation Failed', err.message || 'An unknown error occurred during video synthesis. Check server logs.');
-                        this.navigate('view-create');
-                    }
-                }
-            },
-
-            cancelGeneration() {
-                if(state.abortController) {
-                    state.abortController.abort();
-                }
-            },
-
-            setupPreview(blob, title) {
-                if (state.currentPreviewBlobUrl) {
-                    URL.revokeObjectURL(state.currentPreviewBlobUrl);
-                }
-                state.currentPreviewBlobUrl = URL.createObjectURL(blob);
-                
-                const videoEl = $('preview-video');
-                videoEl.src = state.currentPreviewBlobUrl;
-                $('preview-title').textContent = title;
-                
-                this.navigate('view-preview');
-            },
-
-            exportVideo() {
-                if(!state.currentPreviewBlobUrl) return;
-                
-                const a = document.createElement('a');
-                a.href = state.currentPreviewBlobUrl;
-                const cleanTitle = $('preview-title').textContent.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-                a.download = `GoDark_AI_${cleanTitle}_${Date.now()}.mp4`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                
-                this.showModal('success', 'Export Started', 'Your video is downloading. Note: the watermark is an in-app overlay. Server-side processing is required for burned-in exports.');
+        // --- 4. Main Generation Flow ---
+        generateBtn.addEventListener('click', async () => {
+            const prompt = promptInput.value.trim();
+            if (!prompt) {
+                showError('Please enter a descriptive prompt first.');
+                return;
             }
-        };
 
-        window.addEventListener('DOMContentLoaded', () => {
-            app.init();
+            // Lock UI
+            generateBtn.disabled = true;
+            generateBtn.textContent = 'Generating...';
+            videoWrapper.classList.add('active');
+            loadingOverlay.classList.add('active');
+            actionRow.classList.remove('active');
+            resultVideo.removeAttribute('src'); // Clear previous
+
+            try {
+                // NEVER call Hugging Face directly. Route through backend safely.
+                const response = await fetch('/api/generate-video', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || `Server responded with status: ${response.status}`);
+                }
+
+                if (data.success && data.mediaBase64) {
+                    currentBase64Video = data.mediaBase64;
+                    resultVideo.src = currentBase64Video;
+                    
+                    // Reveal actions & hide loader
+                    loadingOverlay.classList.remove('active');
+                    generateBtn.disabled = false;
+                    generateBtn.textContent = 'Generate Scene';
+                    actionRow.classList.add('active');
+
+                    // Save success permanently locally
+                    saveToHistory(prompt, currentBase64Video);
+                } else {
+                    throw new Error('Invalid data payload received from backend.');
+                }
+
+            } catch (err) {
+                console.error('Generation Flow Error:', err);
+                showError(err.message || 'Network connection failed or request timed out.');
+            }
+        });
+
+        // --- 5. Export/Download Feature ---
+        downloadBtn.addEventListener('click', () => {
+            if (!currentBase64Video) return;
+            
+            const link = document.createElement('a');
+            link.href = currentBase64Video;
+            link.download = `godark_generation_${Date.now()}.mp4`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         });
     </script>
 </body>
