@@ -39,22 +39,11 @@
             line-height: 1.5;
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-base);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--bg-input);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--bg-panel);
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-base); }
+        ::-webkit-scrollbar-thumb { background: var(--bg-input); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--bg-panel); }
 
-        /* Utility Classes */
         .glass {
             background: rgba(18, 18, 20, 0.6);
             backdrop-filter: blur(16px);
@@ -75,7 +64,6 @@
         .flex-col { flex-direction: column; }
         .text-center { text-align: center; }
 
-        /* Buttons & Inputs */
         button {
             cursor: pointer;
             border: none;
@@ -142,16 +130,9 @@
             box-shadow: 0 0 0 2px var(--accent-glow);
         }
         textarea { resize: vertical; min-height: 120px; }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
+        label { display: block; margin-bottom: 8px; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
         .input-group { margin-bottom: 20px; }
 
-        /* Splash Screen */
         #splash-screen {
             position: fixed;
             inset: 0;
@@ -179,7 +160,6 @@
             opacity: 0;
         }
 
-        /* Header */
         header {
             position: sticky;
             top: 0;
@@ -202,14 +182,8 @@
             border-radius: 50%;
             transition: var(--transition);
         }
-        .menu-btn:hover, .profile-btn:hover {
-            background: var(--bg-input);
-        }
-        .header-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
+        .menu-btn:hover, .profile-btn:hover { background: var(--bg-input); }
+        .header-title { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.5px; }
         .avatar-img {
             width: 36px;
             height: 36px;
@@ -218,7 +192,6 @@
             border: 2px solid var(--accent-primary);
         }
 
-        /* Sidebar Drawer */
         #drawer-overlay {
             position: fixed;
             inset: 0;
@@ -229,10 +202,7 @@
             pointer-events: none;
             transition: var(--transition);
         }
-        #drawer-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        #drawer-overlay.active { opacity: 1; pointer-events: auto; }
         #sidebar {
             position: fixed;
             top: 0;
@@ -248,17 +218,8 @@
             padding: 24px 0;
         }
         #sidebar.active { left: 0; }
-        .sidebar-header {
-            padding: 0 24px 24px;
-            border-bottom: 1px solid var(--border-glass);
-            margin-bottom: 16px;
-        }
-        .sidebar-user {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 16px;
-        }
+        .sidebar-header { padding: 0 24px 24px; border-bottom: 1px solid var(--border-glass); margin-bottom: 16px; }
+        .sidebar-user { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
         .sidebar-nav { flex: 1; overflow-y: auto; }
         .nav-item {
             display: flex;
@@ -276,16 +237,10 @@
             background: rgba(255,255,255,0.03);
             border-left: 3px solid var(--accent-primary);
         }
-        .sidebar-footer {
-            padding: 24px;
-            border-top: 1px solid var(--border-glass);
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
+        .sidebar-footer { padding: 24px; border-top: 1px solid var(--border-glass); font-size: 0.85rem; color: var(--text-muted); }
         .ext-links { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
         .ext-links a { color: var(--accent-primary); text-decoration: none; font-weight: 600; }
 
-        /* Main Container & Views */
         main {
             padding: 24px;
             max-width: 800px;
@@ -293,23 +248,11 @@
             min-height: calc(100vh - 70px);
             position: relative;
         }
-        .view {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
+        .view { display: none; animation: fadeIn 0.4s ease; }
         .view.active { display: block; }
-        .view-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 24px;
-        }
+        .view-title { font-size: 1.75rem; font-weight: 700; margin-bottom: 24px; }
 
-        /* Projects View */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
         .project-card {
             background: var(--bg-panel);
             border: 1px solid var(--border-glass);
@@ -319,24 +262,9 @@
             display: flex;
             flex-direction: column;
         }
-        .project-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-glow);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .project-thumb {
-            height: 160px;
-            background: var(--bg-input);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .project-thumb video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .project-card:hover { transform: translateY(-4px); border-color: var(--accent-glow); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .project-thumb { height: 160px; background: var(--bg-input); position: relative; display: flex; align-items: center; justify-content: center; }
+        .project-thumb video { width: 100%; height: 100%; object-fit: cover; }
         .play-overlay {
             position: absolute;
             inset: 0;
@@ -349,172 +277,60 @@
             cursor: pointer;
         }
         .project-card:hover .play-overlay { opacity: 1; }
-        .play-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--accent-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px var(--accent-glow);
-        }
+        .play-icon { width: 48px; height: 48px; background: var(--accent-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px var(--accent-glow); }
         .play-icon svg { width: 24px; height: 24px; fill: white; margin-left: 4px; }
         .project-info { padding: 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .project-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .project-meta { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; }
         .project-actions { display: flex; justify-content: space-between; align-items: center; }
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-muted);
-            background: var(--bg-panel);
-            border-radius: var(--radius-lg);
-            border: 1px dashed var(--border-glass);
-            grid-column: 1 / -1;
-        }
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); background: var(--bg-panel); border-radius: var(--radius-lg); border: 1px dashed var(--border-glass); grid-column: 1 / -1; }
 
-        /* Create View */
         .create-panel { padding: 24px; border-radius: var(--radius-lg); }
         .controls-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
         @media (max-width: 600px) { .controls-grid { grid-template-columns: 1fr; } }
 
-        /* Loading View */
-        .loading-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 60vh;
-            text-align: center;
-        }
-        .spinner {
-            width: 80px;
-            height: 80px;
-            border: 4px solid var(--bg-input);
-            border-top: 4px solid var(--accent-primary);
-            border-right: 4px solid var(--accent-secondary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 30px;
-        }
+        .loading-container { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; }
+        .spinner { width: 80px; height: 80px; border: 4px solid var(--bg-input); border-top: 4px solid var(--accent-primary); border-right: 4px solid var(--accent-secondary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 30px; }
         .loading-text { font-size: 1.25rem; font-weight: 600; margin-bottom: 10px; }
         .loading-subtext { color: var(--text-muted); font-size: 0.95rem; max-width: 400px; }
         .progress-bar-container { width: 100%; max-width: 400px; height: 6px; background: var(--bg-input); border-radius: 3px; margin-top: 30px; overflow: hidden; }
         .progress-bar { height: 100%; background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary)); width: 0%; transition: width 0.5s ease; }
 
-        /* Preview View */
-        .preview-wrapper {
-            background: var(--bg-panel);
-            border-radius: var(--radius-lg);
-            padding: 20px;
-            border: 1px solid var(--border-glass);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-        .video-container {
-            position: relative;
-            width: 100%;
-            background: #000;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            aspect-ratio: 16 / 9;
-            margin-bottom: 24px;
-        }
+        .preview-wrapper { background: var(--bg-panel); border-radius: var(--radius-lg); padding: 20px; border: 1px solid var(--border-glass); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .video-container { position: relative; width: 100%; background: #000; border-radius: var(--radius-md); overflow: hidden; aspect-ratio: 16 / 9; margin-bottom: 24px; }
         .video-container video { width: 100%; height: 100%; outline: none; }
-        .watermark {
-            position: absolute;
-            bottom: 16px;
-            right: 16px;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1.2rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-            pointer-events: none;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-            z-index: 10;
-        }
+        .watermark { position: absolute; bottom: 16px; right: 16px; color: rgba(255, 255, 255, 0.6); font-size: 1.2rem; font-weight: 800; letter-spacing: 1px; pointer-events: none; text-shadow: 0 2px 4px rgba(0,0,0,0.8); z-index: 10; }
         .preview-actions { display: flex; gap: 16px; }
         @media (max-width: 600px) { .preview-actions { flex-direction: column; } }
 
-        /* FAB */
-        .fab {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 20px var(--accent-glow);
-            cursor: pointer;
-            z-index: 90;
-            transition: var(--transition);
-        }
+        .fab { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px var(--accent-glow); cursor: pointer; z-index: 90; transition: var(--transition); }
         .fab:hover { transform: scale(1.05) rotate(90deg); }
         .fab svg { width: 24px; height: 24px; fill: currentColor; }
 
-        /* Modals */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: var(--transition);
-            padding: 20px;
-        }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 20px; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content {
-            background: var(--bg-panel);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-lg);
-            width: 100%;
-            max-width: 450px;
-            padding: 30px;
-            transform: scale(0.95) translateY(10px);
-            transition: var(--transition);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
+        .modal-content { background: var(--bg-panel); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); width: 100%; max-width: 450px; padding: 30px; transform: scale(0.95) translateY(10px); transition: var(--transition); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
         .modal-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
         .modal-title { font-size: 1.25rem; font-weight: 700; }
         .modal-body { color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; font-size: 0.95rem; }
         .modal-footer { display: flex; justify-content: flex-end; gap: 12px; }
 
-        /* Icons */
         .icon { width: 24px; height: 24px; fill: currentColor; }
         .icon-sm { width: 18px; height: 18px; fill: currentColor; }
 
-        /* Typography Content */
-        .content-box {
-            background: var(--bg-panel);
-            padding: 24px;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-glass);
-            margin-bottom: 20px;
-        }
+        .content-box { background: var(--bg-panel); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-glass); margin-bottom: 20px; }
         .content-box h3 { margin-bottom: 12px; color: var(--text-main); }
         .content-box p { color: var(--text-muted); margin-bottom: 16px; }
         .content-box ul { list-style: none; color: var(--text-muted); margin-bottom: 16px; }
         .content-box li { margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
         .content-box li::before { content: '•'; color: var(--accent-primary); font-weight: bold; }
 
-        /* Animations */
         @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes scaleIn { to { opacity: 1; transform: scale(1); } }
         @keyframes slideUpFade { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(20px); } }
         @keyframes spin { 100% { transform: rotate(360deg); } }
-
     </style>
 </head>
 <body>
@@ -579,8 +395,7 @@
                 <h1 class="view-title" style="margin:0;">Your Projects</h1>
                 <button class="btn-primary" style="width:auto; padding: 10px 16px; font-size:0.9rem;" onclick="app.navigate('view-create')">+ New</button>
             </div>
-            <div class="projects-grid" id="projects-container">
-                </div>
+            <div class="projects-grid" id="projects-container"></div>
         </section>
 
         <section id="view-create" class="view">
@@ -609,7 +424,7 @@
                         </select>
                     </div>
                     <div class="input-group">
-                        <label for="prompt-duration">Duration (Model Native)</label>
+                        <label for="prompt-duration">Duration</label>
                         <select id="prompt-duration">
                             <option value="8">8 Seconds (Default)</option>
                             <option value="10">10 Seconds</option>
@@ -638,8 +453,8 @@
         <section id="view-loading" class="view">
             <div class="loading-container glass" style="border-radius: var(--radius-lg);">
                 <div class="spinner"></div>
-                <div class="loading-text gradient-text" id="loading-status">Initializing Generation...</div>
-                <div class="loading-subtext" id="loading-subtext">Preparing neural pathways and processing script parameters.</div>
+                <div class="loading-text gradient-text" id="loading-status">Initializing Backend...</div>
+                <div class="loading-subtext" id="loading-subtext">Securely routing your prompt to the serverless synthesis engine.</div>
                 <div class="progress-bar-container">
                     <div class="progress-bar" id="loading-progress"></div>
                 </div>
@@ -676,25 +491,15 @@
                 <h3>Getting Started</h3>
                 <p>GoDark Video AI transforms your text prompts into highly detailed, cinematic videos using the state-of-the-art cerspense/zeroscope_v2_576w model.</p>
                 <ul>
-                    <li>Go to the <b>Profile</b> (top right) to enter your Hugging Face API Token.</li>
                     <li>Navigate to <b>Create Video</b> to start.</li>
                     <li>Write a detailed, descriptive narrative prompt.</li>
                     <li>Select your preferred visual style, duration, and aspect ratio.</li>
-                    <li>Click Generate and wait for the model to synthesize your video.</li>
-                </ul>
-            </div>
-            <div class="content-box">
-                <h3>Tips for Better Prompts</h3>
-                <p>To get the most cinematic results, use rich descriptive keywords such as:</p>
-                <ul>
-                    <li>Lighting: "cinematic lighting, volumetric fog, neon glow"</li>
-                    <li>Camera: "drone shot, panning, slow motion, 8k resolution"</li>
-                    <li>Environment: "cyberpunk city, hyper-realistic, dark atmosphere"</li>
+                    <li>Click Generate and wait for the secure serverless backend to synthesize your video.</li>
                 </ul>
             </div>
             <div class="content-box">
                 <h3>Data Storage</h3>
-                <p>All videos are saved locally on your device using IndexedDB. No videos are stored on our servers. Export your favorites to keep them permanently!</p>
+                <p>All videos are saved locally on your device using IndexedDB. Export your favorites to keep them permanently!</p>
             </div>
         </section>
 
@@ -704,7 +509,7 @@
                 <div class="gradient-text" style="font-size: 2.5rem; font-weight: 800; margin-bottom: 10px;">GoDark Video AI</div>
                 <p style="font-size: 1.1rem; color: var(--text-main);">Premium Text-to-Video Synthesis</p>
                 <div style="margin: 30px 0; border-top: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass); padding: 20px 0;">
-                    <p>Powered by <b>Hugging Face Inference API</b></p>
+                    <p>Powered by <b>Serverless Hugging Face Inference</b></p>
                     <p style="color: var(--text-muted); font-size: 0.9rem;">Model: cerspense/zeroscope_v2_576w</p>
                 </div>
                 <p style="margin-bottom: 5px;">Designed & Developed by <b style="color:var(--accent-primary);">Insider</b></p>
@@ -729,15 +534,14 @@
                 <h3 class="modal-title" id="modal-title">Title</h3>
             </div>
             <div class="modal-body" id="modal-body">Message goes here.</div>
-            <div class="modal-footer" id="modal-footer">
-                </div>
+            <div class="modal-footer" id="modal-footer"></div>
         </div>
     </div>
 
     <div id="profile-modal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Profile & Settings</h3>
+                <h3 class="modal-title">Profile Settings</h3>
             </div>
             <div class="modal-body">
                 <div class="input-group" style="text-align:center;">
@@ -754,10 +558,8 @@
                     <label>Display Name</label>
                     <input type="text" id="profile-name" placeholder="Enter your name">
                 </div>
-                <div class="input-group">
-                    <label>Hugging Face API Token (Required)</label>
-                    <input type="password" id="profile-token" placeholder="hf_xxxxxxxxxxxxxxxxx">
-                    <small style="color:var(--text-muted); font-size:0.8rem; display:block; margin-top:4px;">Needed to access the zeroscope model securely.</small>
+                <div style="text-align:center; padding-top: 10px;">
+                    <small style="color:var(--success); font-weight:bold;">API Access is securely handled by our serverless backend.</small>
                 </div>
             </div>
             <div class="modal-footer">
@@ -768,17 +570,11 @@
     </div>
 
     <script>
-        /**
-         * GoDark Video AI - Core Logic
-         * Developer: Insider
-         * Pure Vanilla JS Implementation
-         */
-
         const $ = (id) => document.getElementById(id);
         const $$ = (sel) => document.querySelectorAll(sel);
 
         const CONFIG = {
-            MODEL_URL: 'https://api-inference.huggingface.co/models/cerspense/zeroscope_v2_576w',
+            API_URL: '/api/generate-video',
             DB_NAME: 'GoDarkVideoDB',
             DB_VERSION: 1
         };
@@ -790,8 +586,7 @@
             loadingInterval: null,
             profile: {
                 name: localStorage.getItem('godark_name') || '',
-                avatar: localStorage.getItem('godark_avatar') || '',
-                token: localStorage.getItem('godark_token') || ''
+                avatar: localStorage.getItem('godark_avatar') || ''
             },
             currentPreviewBlobUrl: null
         };
@@ -810,7 +605,6 @@
                 this.initDB();
                 this.updateProfileUI();
                 
-                // Sidebar click handling
                 $$('.nav-item').forEach(el => {
                     el.addEventListener('click', (e) => {
                         $$('.nav-item').forEach(nav => nav.classList.remove('active'));
@@ -819,7 +613,6 @@
                     });
                 });
 
-                // Profile Image Upload conversion
                 $('profile-upload').addEventListener('change', (e) => {
                     const file = e.target.files[0];
                     if(!file) return;
@@ -833,13 +626,11 @@
                 });
             },
 
-            // Navigation
             navigate(viewId) {
                 $$('.view').forEach(v => v.classList.remove('active'));
                 $(viewId).classList.add('active');
                 state.currentView = viewId;
                 window.scrollTo({top:0, behavior:'smooth'});
-                
                 if(viewId === 'view-projects') this.renderProjects();
             },
 
@@ -852,7 +643,6 @@
                 $('drawer-overlay').classList.remove('active');
             },
 
-            // Modal System
             showModal(type, title, message, config = {}) {
                 $('modal-icon').innerHTML = ui.icons[type] || ui.icons.info;
                 $('modal-title').textContent = title;
@@ -876,7 +666,7 @@
                 const confirmBtn = document.createElement('button');
                 confirmBtn.className = type === 'danger' ? 'btn-danger' : 'btn-primary';
                 confirmBtn.style.width = 'auto';
-                if(type === 'danger') confirmBtn.style.padding = '14px 24px'; // match primary sizing
+                if(type === 'danger') confirmBtn.style.padding = '14px 24px';
                 confirmBtn.textContent = config.confirmText || 'OK';
                 confirmBtn.onclick = () => {
                     this.closeModal();
@@ -890,10 +680,8 @@
                 $('custom-modal').classList.remove('active');
             },
 
-            // Profile System
             openProfileModal() {
                 $('profile-name').value = state.profile.name;
-                $('profile-token').value = state.profile.token;
                 if (state.profile.avatar) {
                     $('profile-preview-img').src = state.profile.avatar;
                     $('profile-preview-img').style.display = 'block';
@@ -906,7 +694,6 @@
             },
             saveProfile() {
                 const name = $('profile-name').value.trim();
-                const token = $('profile-token').value.trim();
                 let avatar = state.profile.avatar;
                 
                 if($('profile-preview-img').style.display === 'block') {
@@ -914,13 +701,12 @@
                 }
 
                 localStorage.setItem('godark_name', name);
-                localStorage.setItem('godark_token', token);
                 localStorage.setItem('godark_avatar', avatar);
 
-                state.profile = { name, token, avatar };
+                state.profile = { name, avatar };
                 this.updateProfileUI();
                 this.closeProfileModal();
-                this.showModal('success', 'Profile Saved', 'Your settings and API token have been updated securely.');
+                this.showModal('success', 'Profile Saved', 'Your profile settings have been updated.');
             },
             updateProfileUI() {
                 if (state.profile.name) {
@@ -933,7 +719,6 @@
                 }
             },
 
-            // IndexedDB System
             initDB() {
                 const request = indexedDB.open(CONFIG.DB_NAME, CONFIG.DB_VERSION);
                 request.onerror = (e) => console.error("Database error: ", e);
@@ -988,7 +773,6 @@
                 });
             },
 
-            // UI Renderers
             async renderProjects() {
                 const container = $('projects-container');
                 container.innerHTML = '';
@@ -1010,7 +794,6 @@
 
                     projects.forEach(p => {
                         const date = new Date(p.timestamp).toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' });
-                        // Create temporary object URL for thumbnail preview
                         const objUrl = URL.createObjectURL(p.blob);
                         
                         const card = document.createElement('div');
@@ -1039,7 +822,6 @@
                         `;
                         container.appendChild(card);
                     });
-
                 } catch(err) {
                     console.error(err);
                     this.showModal('error', 'Database Error', 'Could not load projects from local storage.');
@@ -1073,9 +855,7 @@
                 }
             },
 
-            // Video Generation Logic
             buildPrompt(base, style, duration, ratio) {
-                // Enhancing the prompt for cinematic quality based on HF model strengths
                 const styleMap = {
                     'Cinematic': 'cinematic lighting, epic composition, 8k resolution, highly detailed, blockbuster movie style, sharp focus',
                     'Dark Futuristic': 'dark atmosphere, cyberpunk, neon glowing lights, futuristic, grim dark, high contrast, moody',
@@ -1089,16 +869,6 @@
             },
 
             async startGeneration() {
-                const token = state.profile.token;
-                if (!token) {
-                    this.showModal('warning', 'API Token Missing', 'Please add your Hugging Face API Token in the Profile settings to generate videos.', {
-                        showCancel: true,
-                        confirmText: 'Open Settings',
-                        onConfirm: () => this.openProfileModal()
-                    });
-                    return;
-                }
-
                 const promptInput = $('prompt-text').value.trim();
                 if (!promptInput) {
                     this.showModal('error', 'Missing Prompt', 'Please describe the scene you want to generate.');
@@ -1111,23 +881,20 @@
                 const ratio = $('prompt-ratio').value;
                 const finalPrompt = this.buildPrompt(promptInput, style, duration, ratio);
 
-                // UI Loading State
                 this.navigate('view-loading');
                 const progressEl = $('loading-progress');
                 const statusEl = $('loading-status');
-                const subEl = $('loading-subtext');
                 
                 progressEl.style.width = '10%';
                 let progCounter = 10;
                 
                 const statuses = [
-                    "Connecting to Hugging Face Inference API...",
-                    "Allocating GPU resources...",
-                    "Analyzing semantic text prompt...",
+                    "Connecting to Serverless Backend...",
+                    "Proxying request to Hugging Face...",
                     "Synthesizing visual frames...",
                     "Applying cinematic style...",
                     "Rendering neural video sequence...",
-                    "Finalizing MP4 blob..."
+                    "Streaming MP4 blob..."
                 ];
                 let statusIdx = 0;
                 
@@ -1144,10 +911,10 @@
                 state.abortController = new AbortController();
 
                 try {
-                    const response = await fetch(CONFIG.MODEL_URL, {
+                    // Call the Vercel API Route instead of Hugging Face directly
+                    const response = await fetch(CONFIG.API_URL, {
                         method: 'POST',
                         headers: {
-                            'Authorization': `Bearer ${token}`,
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({ inputs: finalPrompt }),
@@ -1157,34 +924,17 @@
                     clearInterval(state.loadingInterval);
                     progressEl.style.width = '100%';
 
-                    // Handle API Errors
                     if (!response.ok) {
-                        const contentType = response.headers.get('content-type');
-                        let errMsg = `HTTP Error ${response.status}`;
-                        if (contentType && contentType.includes('application/json')) {
-                            const errJson = await response.json().catch(()=>({}));
-                            if(errJson.error && errJson.error.includes("currently loading")) {
-                                errMsg = `Model is warming up. Estimated wait: ${Math.ceil(errJson.estimated_time || 30)} seconds. Please try again shortly.`;
-                            } else {
-                                errMsg = errJson.error || errMsg;
-                            }
-                        }
-                        throw new Error(errMsg);
+                        // The backend returns a structured JSON error
+                        const errJson = await response.json().catch(() => ({}));
+                        throw new Error(errJson.error || `HTTP Error ${response.status}`);
                     }
 
-                    // Model returns video/mp4 blob
                     const blob = await response.blob();
-                    if(blob.type.includes('json')) {
-                        // Sometimes HF returns json even on 200 if it's an info message
-                        const text = await blob.text();
-                        const json = JSON.parse(text);
-                        throw new Error(json.error || "Unexpected JSON response instead of video format.");
-                    }
                     if(!blob.type.includes('video')) {
                         throw new Error(`Invalid response format from API. Expected video, got: ${blob.type}`);
                     }
 
-                    // Save and show
                     statusEl.textContent = "Saving locally...";
                     await this.saveProject(blob, { title: title || promptInput.substring(0, 30)+'...', prompt: promptInput, style });
                     
@@ -1196,8 +946,8 @@
                         this.showModal('info', 'Cancelled', 'Video generation was cancelled.');
                         this.navigate('view-create');
                     } else {
-                        console.error(err);
-                        this.showModal('error', 'Generation Failed', err.message || 'An unknown error occurred during video synthesis.');
+                        console.error("Frontend Generation Error:", err);
+                        this.showModal('error', 'Generation Failed', err.message || 'An unknown error occurred during video synthesis. Check server logs.');
                         this.navigate('view-create');
                     }
                 }
@@ -1209,7 +959,6 @@
                 }
             },
 
-            // Preview and Export
             setupPreview(blob, title) {
                 if (state.currentPreviewBlobUrl) {
                     URL.revokeObjectURL(state.currentPreviewBlobUrl);
@@ -1221,10 +970,6 @@
                 $('preview-title').textContent = title;
                 
                 this.navigate('view-preview');
-                
-                // Ensure watermark overlay is noted for code reviewers
-                // Note: The "GoDark" watermark overlay is implemented via CSS (.watermark)
-                // overlaying the HTML5 video element. Burned-in watermarks require FFmpeg or backend processing.
             },
 
             exportVideo() {
@@ -1242,11 +987,9 @@
             }
         };
 
-        // Initialize App
         window.addEventListener('DOMContentLoaded', () => {
             app.init();
         });
-
     </script>
 </body>
 </html>
