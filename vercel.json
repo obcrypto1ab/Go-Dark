@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "functions": {
+    "api/generate-video.js": {
+      "maxDuration": 60
+    }
+  },
+  "routes": [
+    { "src": "/(.*)", "dest": "/public/index.html" },
+    { "src": "/api/(.*)", "dest": "/api/$1" }
+  ]
+}
